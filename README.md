@@ -4,7 +4,7 @@ The purpose of this project, is to have clock—eventually internationalized (ac
 
 ## Stage 1
 
-The first version is just to have one clock on the screen showing the current time in the default timezone, with the ":" toggles the blink every half second, and clock updates itself each second.
+The first version is just to have one clock on the screen showing the current time in the default timezone, with the colons ":" toggles the blink every half second, and clock updates itself each second.
 
 In the console, it should be only the clock visible, so the screen should be cleared on every update.
 
