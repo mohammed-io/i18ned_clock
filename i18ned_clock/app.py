@@ -2,6 +2,7 @@
 import time
 import curses
 from threading import Thread
+import asyncio
 
 
 
@@ -33,7 +34,7 @@ class Clock(object):
 
 
 
-def initScreen(stdscr, clock, pos_y, pos_x):
+async def initScreen(stdscr, clock, pos_y, pos_x):
     curses.curs_set(0) 
     
     if pos_y >= 15 or pos_x >= 150:
@@ -44,10 +45,10 @@ def initScreen(stdscr, clock, pos_y, pos_x):
     num = 0
     while True:
         stdscr.addstr(pos_y, pos_x, clock.__str__(), curses.A_BOLD)
-        time.sleep(0.5)
+        await asyncio.sleep(0.5)
         stdscr.refresh()
         stdscr.addstr(pos_y,pos_x, clock.__str__(colons=False), curses.A_BOLD)
-        time.sleep(0.5)
+        await asyncio.sleep(0.5)
         stdscr.refresh()
 
         num += 1
@@ -58,14 +59,18 @@ def initScreen(stdscr, clock, pos_y, pos_x):
 clock1 = Clock(3)
 clock2 = Clock(4)
 
-def main(stdscr):
-    Thread(target=initScreen, args=(stdscr, clock1, 0, 10)).start()
-    Thread(target=initScreen, args=(stdscr, clock1, 0, 40)).start()
-    Thread(target=initScreen, args=(stdscr, clock2, 0, 70)).start()
+async def main(stdscr):
+
+    await asyncio.gather(
+        asyncio.create_task(initScreen(stdscr, clock1, 0, 10)),
+        asyncio.create_task(initScreen(stdscr, clock1, 0, 40)),
+        asyncio.create_task(initScreen(stdscr, clock1, 0, 70))
+    )
 
 
 
-curses.wrapper(main)
+
+curses.wrapper(lambda stdscr: asyncio.run(main(stdscr)))
 
 
 
