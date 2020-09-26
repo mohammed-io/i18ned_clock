@@ -10,7 +10,7 @@ class TimeZone(object):
     def __init__(self, timezone):
         self.timezone = timezone
     
-    def calculateCurrentTime(self, colons):
+    def calculate_current_time(self, colons):
         localTime = time.localtime()
 
         if colons == False:
@@ -29,12 +29,12 @@ class Clock(object):
         self.timezoneObj = TimeZone(self.timezone)
 
     def __str__(self, colons=True):
-        return self.timezoneObj.calculateCurrentTime(colons)
+        return self.timezoneObj.calculate_current_time(colons)
 
 
 
 
-async def initScreen(stdscr, clock, pos_y, pos_x):
+async def init_screen(stdscr, clock, pos_y, pos_x):
     curses.curs_set(0) 
     
     if pos_y >= 15 or pos_x >= 150:
@@ -62,9 +62,9 @@ clock2 = Clock(4)
 async def main(stdscr):
 
     await asyncio.gather(
-        asyncio.create_task(initScreen(stdscr, clock1, 0, 10)),
-        asyncio.create_task(initScreen(stdscr, clock1, 0, 40)),
-        asyncio.create_task(initScreen(stdscr, clock1, 0, 70))
+        asyncio.create_task(init_screen(stdscr, clock1, 0, 10)),
+        asyncio.create_task(init_screen(stdscr, clock1, 0, 40)),
+        asyncio.create_task(init_screen(stdscr, clock1, 0, 70))
     )
 
 
