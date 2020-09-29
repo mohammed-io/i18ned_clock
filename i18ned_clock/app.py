@@ -8,14 +8,13 @@ import pytz
 class Clock(object):
     def __init__(self, timezone):
         self.timezone = timezone
+        self.tz = pytz.timezone(self.timezone)
 
     def paint(self, frame):
-        timezone = pytz.timezone(self.timezone)
-
         if frame >= 30:
-            return datetime.now(tz=timezone).strftime("%H %M %S (UTC%Z)")
+            return datetime.now(tz=self.tz).strftime("%H %M %S (UTC%Z)")
         else:
-            return datetime.now(tz=timezone).strftime("%H:%M:%S (UTC%Z)")
+            return datetime.now(tz=self.tz).strftime("%H:%M:%S (UTC%Z)")
 
 
 
