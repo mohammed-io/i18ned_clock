@@ -33,9 +33,6 @@ async def init_screen(stdscr, clock, y=0, x=0):
             raise Exception('Window size is small.')
 
 
-class Screen:
-    y = 0
-    x = 0
     async def init_screen(stdscr, clock, y=y, x=x):
         curses.curs_set(0) 
 
@@ -54,33 +51,20 @@ class Screen:
                 raise Exception('Window size is small.')
 
 
-resultedCoroutines = []
+class Column:
+    def __init__(self, children):
+        self.children = children
+
+    def paint(self, frame):
+        return "\n".join([c.paint(frame) for c in self.children])
 
 
-class Row(Screen):
-    def __init__(self, stdscr, clocks):
-        self.clocks = clocks
-        self.stdscr = stdscr
+class Row:
+    def __init__(self, children):
+        self.children = children
 
-    async def paint(self):
-        for clock in self.clocks:
-            resultedCoroutines.append(Screen.init_screen(self.stdscr, clock, Screen.y, Screen.x))
-            Screen.x += 30
-        Screen.x = 0
-        Screen.y += 4   
-
-
-class Column(Screen):
-    def __init__(self, stdscr, clocks):
-        self.clocks = clocks
-        self.stdscr = stdscr
-
-    async def paint(self):
-        for clock in self.clocks:
-            resultedCoroutines.append(Screen.init_screen(self.stdscr, clock, Screen.y, Screen.x))
-            Screen.y += 3
-        Screen.x = 0
-        Screen.y += 1
+    def paint(self, frame):
+        return "\t".join([c.paint(frame) for c in self.children])
 
 
 clock1 = Clock("Asia/Baghdad")
@@ -88,7 +72,6 @@ clock2 = Clock("Asia/Kabul")
 
 
 async def main(stdscr):
-    Column(stdscr, clocks=[Row(stdscr, clocks=[await Column(stdscr, clocks=[clock1, clock2, clock1, clock1]).paint()]), await Row(stdscr, clocks=[clock1, clock2, clock1]).paint(), await Column(stdscr, clocks=[clock1, clock2, clock1]).paint(), await Row(stdscr, clocks=[clock1, clock2, clock1, clock1]).paint()])
-    await asyncio.gather(*resultedCoroutines) 
+    await asyncio.gather(init_screen(stdscr, Column(children=[clock1, clock2, clock1]), 0, 0), init_screen(stdscr, Row(children=[clock1, clock1]), 5, 0),  init_screen(stdscr, Row(children=[clock1, clock1, clock1, clock1]), 8, 20))
 
 curses.wrapper(lambda stdscr: asyncio.run(main(stdscr)))
