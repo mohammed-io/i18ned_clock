@@ -74,13 +74,12 @@ clock2 = Clock("Asia/Kabul")
 async def main(stdscr):
     await asyncio.gather(
             init_screen(stdscr,
-            #  Column(children=[
-            #      Row(children=[clock1, clock2, clock1]),
-            #      Clock("Asia/Baghdad"),
-            #      Row(children=[clock1, clock1]),
-            #      Row(children=[clock1, clock1, clock1, clock1]),
-            # ])
-            clock2,
+             Column(children=[
+                 Row(children=[clock1, clock2, clock1]),
+                 Clock("Asia/Baghdad"),
+                 Row(children=[clock1, clock1]),
+                 Row(children=[clock1, clock1, clock1, clock1]),
+            ])
             )
         )
 
