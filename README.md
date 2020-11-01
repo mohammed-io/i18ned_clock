@@ -17,3 +17,7 @@ The clocks should to be arranged in columns and/or rows as needed without explic
 All of them should have unified API for painting (i.e. `paint()`).
 
 You might get inspiration from Flutter `Row` and `Column`.
+
+
+## Stage 3
+

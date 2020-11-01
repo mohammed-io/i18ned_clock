@@ -60,7 +60,8 @@ async def main(stdscr):
                  Clock("Asia/Baghdad"),
                  Row(children=[clock1, clock1]),
                  Row(children=[clock1, clock1, clock1, clock1]),
-            ]))
+            ])
+            )
         )
 
 curses.wrapper(lambda stdscr: asyncio.run(main(stdscr)))
