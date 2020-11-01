@@ -21,3 +21,12 @@ You might get inspiration from Flutter `Row` and `Column`.
 
 ## Stage 3
 
+The clock should be displayed in 7-segment-like format. Just like the "12" printed on the screen. Each Symbol might be mapped to a _matrix_ of 5\*5 just like the provided example. Also should support `Column` and `Row` as well, where the latter will be broken.
+
+![7-Segment clock](https://raw.githubusercontent.com/mohammed-io/i18ned_clock/master/7_segment_clock.png)
+
+You might read more about how characters look like [here](https://www.wikiwand.com/en/Seven-segment_display#/Decimal)
+
+Keep in mind, you have additional characters like "UTC" or ":" that are not included in the link above.
+
+Expect that the `Row` class from last stage will easily break, which is normal.
